@@ -100,3 +100,47 @@ inputTags.addEventListener("keypress", async (evento) => {
         };
     };
 });
+
+const botaoPublicar = document.querySelector('.botao-publicar');
+
+// Agora que conseguimos capturar os dados de dentro do nosso formulário (mudamos esssa função do botâo de publicar lá para baixo), podemos implementar uma simulação de envio do formulário para um back-end, ou seja, para um banco de dados.
+// Vamos retornar uma promessa, porque como é uma simulação de um envio para o banco de dados, é o mesmo caso dos outros. Não temos como garantir que vai dar certo e nem garantir que vai dar errado. Precisamos esperar esse processo de envio ser resolvido para retornar essa informação.
+// Então, como vamos simular, vamos utilizar um return new Promise(resolve, reject). Depois, vamos definir o que vai ser feito dentro dessa promessa.
+
+async function publicarprojeto(nomeDoProjeto, descricaoDoProjeto, tagsDoProjeto) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const deuCerto = Math.random() > 0.5; // Simulando sucesso ou falha aleatória
+            if(deuCerto) {
+                resolve('Projeto publicado com sucesso!');
+            } else {
+                reject('Erro ao publicar o projeto. Tente novamente mais tarde.');
+            }
+        }, 2000); // Simulando um atraso de 2 segundos para o envio
+    });
+};
+
+// Vamos simular um intervalo de tempo com o setTimeout. E esse timeout vai receber uma arrow function, que vai receber uma variável const deuCerto, que vai receber um número aleatório.
+// Conseguiremos esse número aleatório através de Math.random() > 0.5. Então, ele vai retornar a verdade quando um número aleatório, que foi retornado do Math.random, for maior do que 0.5. Senão, ele vai retornar essa promessa como errado.
+
+botaoPublicar.addEventListener('click', async (evento) => {
+    evento.preventDefault();
+
+    const nomeDoProjeto = document.getElementById('nome').value;
+    const descricaoDoProjeto = document.getElementById('descricao').value;
+    const tagsDoProjeto = Array.from(listaTags.querySelectorAll('p')).map((tag) => tag.textContent);
+
+    try {
+        const resultado = await publicarprojeto(nomeDoProjeto, descricaoDoProjeto, tagsDoProjeto);
+        console.log(resultado);
+        alert('Deu tudo certo!');
+    } catch (error) {
+        console.error('Deu errado: ', error);
+        alert('Deu tudo errado! :(');
+        
+    }
+
+    // console.log(nomeDoProjeto);
+    // console.log(descricaoDoProjeto);
+    // console.log(tagsDoProjeto);
+});
