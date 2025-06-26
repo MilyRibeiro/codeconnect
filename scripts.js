@@ -144,3 +144,18 @@ botaoPublicar.addEventListener('click', async (evento) => {
     // console.log(descricaoDoProjeto);
     // console.log(tagsDoProjeto);
 });
+
+const botaoDescartar = document.querySelector('.botao-descartar');
+
+botaoDescartar.addEventListener('click', (evento) => {
+    evento.preventDefault();
+
+    const formulario = document.querySelector('form');
+    formulario.reset();
+
+    // Para limpar a prévia da imagem e a lista de tags, que estão de fora do formulário:
+    imagemPrincipal.src = './img/imagem1.png';
+    nomeDaImagem.textContent = 'image_projeto.png';
+
+    listaTags.innerHTML = "";
+});
