@@ -53,3 +53,50 @@ inputUpload.addEventListener("change", async (evento) => {
         }
     };
 });
+
+const inputTags = document.getElementById('categoria');
+const listaTags = document.getElementById('lista-tags');
+
+// Removendo tags:
+listaTags.addEventListener("click", (evento) => {
+    if (evento.target.classList.contains("remove-tag")) {
+        const tagQueQueremosRemover = evento.target.parentElement;
+        listaTags.removeChild(tagQueQueremosRemover);
+    };
+});
+
+// Adicionando novas tags:
+const tagsDisponiveis = ["Front-end", "front-end", "back-end", "Back-end", "Programação", "programação", "Data Science", "data science", "Full-stack", "full-stack", "HTML", "CSS", "JavaScript", "PHP", "Python", "Java", "C#", "Ruby", "Swift", "Kotlin", "TypeScript", "React", "Vue.js", "Angular", "Node.js", "Django", "Flask", "Spring Boot", "Express.js", "GraphQL", "REST API"];
+
+async function verificaTagsDisponiveis(tagTexto) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(tagsDisponiveis.includes(tagTexto));
+        }, 1000)
+        // Simulando uma chamada assíncrona para verificar se a tag existe: por ser uma simulação, vamos usar setTimeout.
+        // Em um cenário real, você poderia fazer uma requisição a um servidor ou API para verificar a existência da tag.
+    });
+};
+
+inputTags.addEventListener("keypress", async (evento) => {
+    if (evento.key === "Enter") {
+        evento.preventDefault();
+        const tagTexto = inputTags.value.trim();
+        if (tagTexto !== "") {
+            try {
+               const tagExiste = await verificaTagsDisponiveis(tagTexto);
+               if(tagExiste) {
+                   const tagNova = document.createElement("li");
+                    tagNova.innerHTML = `<p>${tagTexto}</p> <img src="./img/close-black.svg" class="remove-tag">`;
+                    listaTags.appendChild(tagNova);
+                    inputTags.value = "";
+                } else {
+                    alert('Tag inválida!');
+                }
+            } catch (error) {
+                console.error('Erro ao verificar se a tag existe.');
+                alert("Erro ao verificar a tag. Verifique o console.");
+            };
+        };
+    };
+});
