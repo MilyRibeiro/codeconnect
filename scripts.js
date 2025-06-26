@@ -110,7 +110,7 @@ const botaoPublicar = document.querySelector('.botao-publicar');
 async function publicarprojeto(nomeDoProjeto, descricaoDoProjeto, tagsDoProjeto) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            const deuCerto = Math.random() > 0.5; // Simulando sucesso ou falha aleatória
+            const deuCerto = Math.random() > 0.3; // Simulando sucesso ou falha aleatória
             if(deuCerto) {
                 resolve('Projeto publicado com sucesso!');
             } else {
@@ -121,7 +121,7 @@ async function publicarprojeto(nomeDoProjeto, descricaoDoProjeto, tagsDoProjeto)
 };
 
 // Vamos simular um intervalo de tempo com o setTimeout. E esse timeout vai receber uma arrow function, que vai receber uma variável const deuCerto, que vai receber um número aleatório.
-// Conseguiremos esse número aleatório através de Math.random() > 0.5. Então, ele vai retornar a verdade quando um número aleatório, que foi retornado do Math.random, for maior do que 0.5. Senão, ele vai retornar essa promessa como errado.
+// Conseguiremos esse número aleatório através de Math.random() > 0.3. Então, ele vai retornar a verdade quando um número aleatório, que foi retornado do Math.random, for maior do que 0.5. Senão, ele vai retornar essa promessa como errado.
 
 botaoPublicar.addEventListener('click', async (evento) => {
     evento.preventDefault();
@@ -139,6 +139,14 @@ botaoPublicar.addEventListener('click', async (evento) => {
         alert('Deu tudo errado! :(');
         
     }
+
+    const formulario = document.querySelector('form');
+    formulario.reset();
+
+    imagemPrincipal.src = './img/imagem1.png';
+    nomeDaImagem.textContent = 'image_projeto.png';
+
+    listaTags.innerHTML = "";
 
     // console.log(nomeDoProjeto);
     // console.log(descricaoDoProjeto);
@@ -159,3 +167,5 @@ botaoDescartar.addEventListener('click', (evento) => {
 
     listaTags.innerHTML = "";
 });
+
+publicarprojeto();
